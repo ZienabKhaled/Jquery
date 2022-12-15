@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery</title>
+    <link
+href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+rel="stylesheet"
+integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+crossorigin="anonymous"
+/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <style>
+    
+        .slider img {
+            display: none;
+            height: 500px;
+        }
+
+        .slider img.active {
+            display: block;
+            border: 2px solid white;
+        }
+    </style>
+</head>
+<body>
+    <center>
+        <div class="slider">
+            <img src="./img1.jpeg" class="active">
+            <img src="./img2.jpeg">
+            <img src="./img3.jpeg">
+            <img src="./img4.jpeg">
+        </div>
+
+        <br><br>
+        <input type="button" class="btn btn-success" onclick="slideshow(this)" value="Start Slideshow">
+        <hr>
+
+        <div class="tog">
+            <div class="row">
+              <div class="col">
+                <img src="./3.jpg" alt="" id="flip1">
+                <p id="flip11">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum saepe dolores blanditiis debitis! Facere rerum culpa suscipit odit molestiae sapiente, velit eligendi laborum? Quasi ratione atque, ad non tenetur tempora?
+                </p>
+              </div>
+              <div class="col">
+                <img src="./8.jpg" alt="" id="flip2">
+                <p id="flip22">Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo unde odit impedit, mollitia amet, consequuntur, soluta illum nulla laudantium eaque molestiae sed laborum labore quo nostrum. Velit soluta repellat quidem!</p>
+              </div>
+              <div class="col">
+                <img src="./5.jpg" alt="" id="flip3">
+                <p id="flip33">Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia est unde reprehenderit! Deserunt numquam vitae laborum aspernatur ipsa veniam ab odio? Suscipit alias eligendi consectetur consequatur veniam maiores tempora accusamus!</p>
+              </div>
+            </div>
+          </div>
+       
+    </center>
+
+    <script
+            src="http://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        var stopSlideshow = false;
+
+        function slideshow(caller) {
+            var status = $(caller).attr('value');
+
+            if (status.indexOf('Start') > -1) {
+                stopSlideshow = false;
+                $(caller).attr('value', 'Stop Slideshow');
+                $(caller).addClass('btn-primary').removeClass('btn-success');
+            } else {
+                stopSlideshow = true;
+                $(caller).attr('value', 'Start Slideshow');
+                $(caller).addClass('btn-success').removeClass('btn-primary');
+            }
+
+            var interval = setInterval(function () {
+                if (!stopSlideshow)
+                    changeSlide('next');
+                else
+                    clearInterval(interval);
+            }, 2000);
+        }
+
+        function changeSlide(direction) {
+            var currentImg = $('.active');
+            var nextImg = currentImg.next();
+            var previousImg = currentImg.prev();
+
+            if (direction == 'next') {
+                if (nextImg.length)
+                    nextImg.addClass('active');
+                else
+                    $('.slider img').first().addClass('active');
+            } else {
+                if (previousImg.length)
+                    previousImg.addClass('active');
+                else
+                    $('.slider img').last().addClass('active');
+            }
+
+            currentImg.removeClass('active');
+        }
+
+        $("#flip1").click("click", function(){
+            $("#flip11").slideToggle();
+        });
+        $("#flip2").click("click", function(){
+            $("#flip22").slideToggle();
+        });
+        $("#flip3").click("click", function(){
+            $("#flip33").slideToggle();
+        });
+    </script>
+</body>
+</html>
